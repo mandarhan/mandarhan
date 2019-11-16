@@ -1,0 +1,359 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-16 19:54+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: app/clients/apps.py:8 app/clients/models.py:51
+msgid "clients"
+msgstr "Клиенты"
+
+#: app/clients/models.py:16
+msgid "male"
+msgstr "мужской"
+
+#: app/clients/models.py:17
+msgid "female"
+msgstr "женский"
+
+#: app/clients/models.py:21
+msgid "last name"
+msgstr "Фамилия"
+
+#: app/clients/models.py:22
+msgid "first name"
+msgstr "Имя"
+
+#: app/clients/models.py:23
+msgid "second name"
+msgstr "Отчество"
+
+#: app/clients/models.py:24
+msgid "additional info"
+msgstr "Дополнительная информация"
+
+#: app/clients/models.py:25
+msgid "phone"
+msgstr "Телефон"
+
+#: app/clients/models.py:26
+msgid "email"
+msgstr "Электропочта"
+
+#: app/clients/models.py:27
+msgid "address"
+msgstr "Адресс"
+
+#: app/clients/models.py:28
+msgid "in VIP list"
+msgstr "В VIP списке"
+
+#: app/clients/models.py:29
+msgid "in blacklist"
+msgstr "В черном списке"
+
+#: app/clients/models.py:30
+msgid "comment"
+msgstr "Комментарий"
+
+#: app/clients/models.py:32
+msgid "is foreigner?"
+msgstr "Иностранец"
+
+#: app/clients/models.py:33
+msgid "sex"
+msgstr "Пол"
+
+#: app/clients/models.py:34
+msgid "birthday"
+msgstr "День рождения"
+
+#: app/clients/models.py:36
+msgid "identification document name"
+msgstr "Удостоверение личности"
+
+#: app/clients/models.py:41
+msgid "document serial"
+msgstr "Серия"
+
+#: app/clients/models.py:42
+msgid "document number"
+msgstr "Номер документа"
+
+#: app/clients/models.py:43
+msgid "document date is issue"
+msgstr "Дата выдачи"
+
+#: app/clients/models.py:44
+msgid "document issued by"
+msgstr "Кем выдан"
+
+#: app/clients/models.py:46
+msgid "client added at"
+msgstr "Клиент добавлен"
+
+#: app/clients/models.py:50 app/clients/models.py:70
+msgid "client"
+msgstr "Клиент"
+
+#: app/clients/models.py:66
+msgid "full name"
+msgstr "ФИО"
+
+#: app/clients/models.py:72 app/clients/models.py:79
+msgid "client photo"
+msgstr "Фото клиента"
+
+#: app/clients/models.py:73 app/clients/models.py:126
+msgid "photo preview"
+msgstr "Предпросмотр"
+
+#: app/clients/models.py:74
+msgid "photo added at"
+msgstr "Фото добавлено"
+
+#: app/clients/models.py:75 app/settings/models/payments.py:7
+#: app/settings/models/services.py:19
+msgid "order"
+msgstr "Сортировка"
+
+#: app/clients/models.py:80
+msgid "client photos"
+msgstr "Фото клиента"
+
+#: app/clients/models.py:125
+msgid "No photo"
+msgstr "Нет еще фото..."
+
+#: app/pages/apps.py:8
+msgid "pages"
+msgstr "Страницы"
+
+#: app/rooms/apps.py:8 app/rooms/models/room.py:69
+msgid "Rooms"
+msgstr "Номера"
+
+#: app/rooms/models/amenity.py:13
+msgid "room amenity"
+msgstr "Удобства в номере"
+
+#: app/rooms/models/amenity.py:19
+msgid "Amenity"
+msgstr "Удобства"
+
+#: app/rooms/models/amenity.py:20
+msgid "Amenities"
+msgstr "Удобства"
+
+#: app/rooms/models/category.py:17
+msgid "per room"
+msgstr "за номер"
+
+#: app/rooms/models/category.py:18
+msgid "per person"
+msgstr "за человека"
+
+#: app/rooms/models/category.py:20
+msgid "category name"
+msgstr "Название категории"
+
+#: app/rooms/models/category.py:21 app/rooms/models/room.py:17
+msgid "main places"
+msgstr "Основных мест"
+
+#: app/rooms/models/category.py:22 app/rooms/models/room.py:18
+msgid "additional places"
+msgstr "Дополнительных мест"
+
+#: app/rooms/models/category.py:23 app/rooms/models/room.py:20
+#: app/settings/models/services.py:14
+msgid "price"
+msgstr "Цена"
+
+#: app/rooms/models/category.py:24
+msgid "price_type"
+msgstr "Тип цены"
+
+#: app/rooms/models/category.py:26 app/rooms/models/room.py:26
+msgid "price for additional place"
+msgstr "Стоимость доп. места"
+
+#: app/rooms/models/category.py:31 app/rooms/models/room.py:57
+msgid "allow external booking"
+msgstr "Доступен для брони через модуль бронирования"
+
+#: app/rooms/models/category.py:35
+msgid "widget category name"
+msgstr "Название категории для модуля бронирования"
+
+#: app/rooms/models/category.py:41
+msgid "widget category description"
+msgstr "Описание категории для модуля бронирования"
+
+#: app/rooms/models/category.py:45 app/rooms/models/room.py:46
+msgid "room size"
+msgstr "Площадь номера"
+
+#: app/rooms/models/category.py:49 app/rooms/models/room.py:50
+msgid "room amenities"
+msgstr "Удобства в номере"
+
+#: app/rooms/models/category.py:54 app/rooms/models/room.py:55
+msgid "additional services"
+msgstr "Дополнительные услуги"
+
+#: app/rooms/models/category.py:59 app/rooms/models/room.py:61
+msgid "allow payment options"
+msgstr "Разрешить опции платежа"
+
+#: app/rooms/models/category.py:66
+msgid "Category"
+msgstr "Категория"
+
+#: app/rooms/models/category.py:67
+msgid "Categories"
+msgstr "Категории"
+
+#: app/rooms/models/category.py:84
+msgid "category photo"
+msgstr "Фото категории"
+
+#: app/rooms/models/room.py:15
+msgid "room name"
+msgstr "Название номера"
+
+#: app/rooms/models/room.py:16
+msgid "category"
+msgstr "Категория"
+
+#: app/rooms/models/room.py:32
+msgid "allow booking sleep place"
+msgstr "Разрешить бронировать спальное место"
+
+#: app/rooms/models/room.py:36
+msgid "sleep place price"
+msgstr "Стоимость суток за спальное место"
+
+#: app/rooms/models/room.py:41
+msgid "is active"
+msgstr "Активно?"
+
+#: app/rooms/models/room.py:44
+msgid "export room name"
+msgstr "Название номера для модуля бронирования"
+
+#: app/rooms/models/room.py:45
+msgid "export room description"
+msgstr "Описание номера для модуля бронирования"
+
+#: app/rooms/models/room.py:68
+msgid "Room"
+msgstr "Номер"
+
+#: app/rooms/models/room.py:85
+msgid "photo"
+msgstr "Фотография"
+
+#: app/rooms/models/room.py:88
+msgid "room"
+msgstr "Номер"
+
+#: app/settings/apps.py:8
+msgid "settings"
+msgstr "Настройки"
+
+#: app/settings/models/payments.py:6
+msgid "payment name"
+msgstr "Название платежа"
+
+#: app/settings/models/payments.py:14
+msgid "payment"
+msgstr "Платеж"
+
+#: app/settings/models/payments.py:15
+msgid "payments"
+msgstr "Платежи"
+
+#: app/settings/models/services.py:13
+msgid "service name"
+msgstr "Название услуги"
+
+#: app/settings/models/services.py:15
+msgid "price type"
+msgstr "Тип цены"
+
+#: app/settings/models/services.py:16
+msgid "maximum value"
+msgstr "Максимальное значение"
+
+#: app/settings/models/services.py:17
+msgid "exclude services"
+msgstr "Исключить услуги"
+
+#: app/settings/models/services.py:18
+msgid "allow apply only full room"
+msgstr "Разрешить добавлять только при полной занятости номера"
+
+#: app/settings/models/services.py:26
+msgid "service"
+msgstr "Услуга"
+
+#: app/settings/models/services.py:27
+msgid "services"
+msgstr "Услуги"
+
+#: app/templates/404.html:10 app/templates/404.html:13
+msgid "Page Not Found"
+msgstr "Страница не найдена"
+
+#: app/templates/index.html:10
+msgid "Mandarhan - Hot Baikal Sea"
+msgstr "Мандархан - Горячее Байкальское море"
+
+#: app/templates/index.html:13
+msgid "Mandarhan"
+msgstr "Мандархан"
+
+#: app/templates/index.html:14
+msgid "Site under construction"
+msgstr "Сайт в разработке"
+
+#~ msgid "without sex"
+#~ msgstr "не выбран"
+
+#~ msgid "exclude service"
+#~ msgstr "исключить услугу"
+
+#~ msgid "Payment at check-in"
+#~ msgstr "Оплата при заселении"
+
+#~ msgid "Online payment"
+#~ msgstr "Оплата онлайн"
+
+#~ msgid "Payment by bank details"
+#~ msgstr "Оплата по банковским реквизитам"
+
+#~ msgid "Cash payment"
+#~ msgstr "Наличные"
+
+#~ msgid "Credit card payment"
+#~ msgstr "Банковская карта"
+
+#~ msgid "name"
+#~ msgstr "название"
