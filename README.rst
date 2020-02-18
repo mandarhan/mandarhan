@@ -9,9 +9,11 @@ Mandarhan Hotel Management System
 ###################
 
 1. :bash:`git clone https://github.com/mandarhan/mandarhan.git`
-2. :bash:`docker-compose build --pull --force-rm`
-3. :bash:`docker-compose run --rm django python manage.py collectstatic --no-input`
-4. :bash:`docker-compose --detach`
+2. :bash:`cp example.env .env`
+3. Отредактируйте файл :code:`.env` в любом удобном редакторе по вашим найстройкам.
+4. :bash:`docker-compose build --pull --force-rm`
+5. :bash:`docker-compose run --rm django python manage.py collectstatic --no-input`
+6. :bash:`docker-compose --detach`
 
 
 Обновление сервера
