@@ -1,6 +1,7 @@
-import uuid
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+from ..uploaders import room_uploader
 
 __all__ = [
     'Room',
@@ -42,27 +43,27 @@ class Room(models.Model):
 
     # Модуль бронирования
     export_name = models.CharField(_("export room name"), max_length=120, null=True, blank=True)
-    export_decription = models.TextField(_("export room description"), null=True, blank=True)
+    export_description = models.TextField(_("export room description"), null=True, blank=True)
     room_size = models.PositiveIntegerField(_("room size"), null=True, blank=True)
     amenities = models.ManyToManyField(
-        'Amenity', 
-        through='RoomAmenities',
-        verbose_name=_("room amenities")
+        'app_settings.Amenity',
+        verbose_name=_("room amenities"),
+        blank=True
     )
     additional_services = models.ManyToManyField(
         "app_settings.Service",
-        through='RoomServices',
-        verbose_name=_('additional services')
+        verbose_name=_('additional services'),
+        blank=True
     )
     allow_external_booking = models.BooleanField(_("allow external booking"), default=True)
     room_payments = models.ManyToManyField(
         'app_settings.Payment',
-        through='RoomPayments',
-        verbose_name=_('allow payment options')
+        verbose_name=_('allow payment options'),
+        blank=True
     )
 
     def __str__(self):
-        return self.name    
+        return '{} | {}'.format(self.category, self.name)
 
     class Meta:
         verbose_name = _("Room")
@@ -70,27 +71,9 @@ class Room(models.Model):
         ordering = ['name']
 
 
-class RoomAmenities(models.Model):
-    amenity = models.ForeignKey("Amenity", on_delete=models.CASCADE)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
-
-
-class RoomServices(models.Model):
-    service = models.ForeignKey("app_settings.Service", on_delete=models.CASCADE)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)
-
-
 class RoomPhotos(models.Model):
-    photo = models.ImageField(
-        _("photo"), 
-        upload_to=lambda instance, filename: str('room/%i/%s.%s' % (instance.id, uuid.uuid4(), filename.split('.')[-1]))
-    )
+    photo = models.ImageField(_("photo"), upload_to=room_uploader)
     room = models.ForeignKey(Room, on_delete=models.CASCADE, verbose_name=_("room"))
 
     class Meta:
         ordering = ['-pk']
-
-
-class RoomPayments(models.Model):
-    payment = models.ForeignKey("app_settings.Payment", on_delete=models.CASCADE)
-    room = models.ForeignKey(Room, on_delete=models.CASCADE)

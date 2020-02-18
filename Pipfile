@@ -11,6 +11,9 @@ djangorestframework = "*"
 pillow = "*"
 django-admin-sortable2 = "*"
 django-admin-rangefilter = "*"
+django-preferences = "*"
+django-colorfield = "*"
+djangorestframework-simplejwt = "*"
 
 [requires]
 python_version = "3.7"

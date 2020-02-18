@@ -1,0 +1,79 @@
+{% extends 'manage/layouts/base.html' %}
+{% load i18n %}
+
+{% block style %}
+    <style type="text/css">
+        body {
+            background-color: #DADADA;
+        }
+
+        body > .grid {
+            height: 100%;
+        }
+
+        .image {
+            margin-top: -100px;
+        }
+
+        .column {
+            max-width: 450px;
+        }
+    </style>
+{% endblock %}
+
+{% block main-container %}
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h3 class="ui teal image header">
+                <img src="" alt="" class="image">
+                <div class="content">
+                    {% trans 'Log-in to your account' %}
+                </div>
+            </h3>
+            <form action="" class="ui large form" method="post">
+                {% csrf_token %}
+                <div class="ui stacked segment">
+                    <div class="field{% if form.email.errors %} error{% endif %}">
+                        {% if form.email.errors %}
+                            <div class="ui error message">
+                                <ul class="list">
+                                    {% for error in form.email.errors %}
+                                        <li>{{ error|escape }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            {{ form.email }}
+                        </div>
+                    </div>
+                    <div class="field">
+                        {% if form.password.errors %}
+                            <div class="ui error message">
+                                <ul class="list">
+                                    {% for error in form.password.errors %}
+                                        <li>{{ error|escape }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            {{ form.password }}
+                        </div>
+                    </div>
+                    <button class="ui fluid large teal submit button">{% trans 'Login' %}</button>
+                </div>
+
+                {% if form.non_field_errors or form.email.errors or form.password.errors  %}
+                    <div class="ui error message">
+                        {% for non_field_error in form.non_field_errors %}
+                            {{ non_field_error|escape }}<br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

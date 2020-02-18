@@ -1,8 +1,9 @@
 import os
-import uuid
 from django.db import models
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
+
+from ..uploaders import category_uploader
 
 __all__ = [
     'Category',
@@ -29,35 +30,24 @@ class Category(models.Model):
         default=0
     )
     allow_external_booking = models.BooleanField(_("allow external booking"), default=False)
-    
+
     # Модуль бронирования
     widget_name = models.CharField(
         _("widget category name"),
-        max_length=120, 
-        null=True, 
+        max_length=120,
+        null=True,
         blank=True
     )
     widget_description = models.TextField(
         _("widget category description"),
-        null=True, 
+        null=True,
         blank=True
     )
     room_size = models.PositiveIntegerField(_("room size"), null=True, blank=True)
-    amenities = models.ManyToManyField(
-        'Amenity', 
-        through='CategoryAmenities',
-        verbose_name=_("room amenities"),
-    )
-    additional_services = models.ManyToManyField(
-        "app_settings.Service",
-        through='CategoryServices', 
-        verbose_name=_("additional services"),
-    )
-    payments = models.ManyToManyField(
-        "app_settings.Payment",
-        through='CategoryPayments',
-        verbose_name=_('allow payment options'),
-    )
+    amenities = models.ManyToManyField('app_settings.Amenity', verbose_name=_("room amenities"), blank=True)
+    additional_services = models.ManyToManyField("app_settings.Service", verbose_name=_("additional services"),
+                                                 blank=True)
+    payments = models.ManyToManyField("app_settings.Payment", verbose_name=_('allow payment options'), blank=True)
 
     def __str__(self):
         return self.name
@@ -68,30 +58,12 @@ class Category(models.Model):
         ordering = ['name']
 
 
-class CategoryAmenities(models.Model):
-    amenity = models.ForeignKey("Amenity", on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-
-
-class CategoryServices(models.Model):
-    service = models.ForeignKey("app_settings.Service", on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-
-
 class CategoryPhotos(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    photo = models.ImageField(
-        _('category photo'), 
-        upload_to=lambda instance, filename: str('category/%i/%s.%s' % (instance.id, uuid.uuid4(), filename.split('.')[-1]))
-    )
+    photo = models.ImageField(_('category photo'), upload_to=category_uploader)
 
     class Meta:
         ordering = ['-pk']
-
-
-class CategoryPayments(models.Model):
-    payment = models.ForeignKey("app_settings.Payment", on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 
 @receiver(models.signals.post_delete, sender=CategoryPhotos)

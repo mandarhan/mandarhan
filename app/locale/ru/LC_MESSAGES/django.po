@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-16 19:54+0800\n"
+"POT-Creation-Date: 2019-11-25 20:53+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,15 +48,18 @@ msgstr "Отчество"
 msgid "additional info"
 msgstr "Дополнительная информация"
 
-#: app/clients/models.py:25
+#: app/clients/models.py:25 app/settings/models/channels.py:14
+#: app/settings/models/hotel.py:14
 msgid "phone"
 msgstr "Телефон"
 
-#: app/clients/models.py:26
+#: app/clients/models.py:26 app/settings/models/channels.py:15
+#: app/settings/models/hotel.py:13
 msgid "email"
 msgstr "Электропочта"
 
-#: app/clients/models.py:27
+#: app/clients/models.py:27 app/settings/models/channels.py:16
+#: app/settings/models/hotel.py:12
 msgid "address"
 msgstr "Адресс"
 
@@ -128,8 +131,10 @@ msgstr "Предпросмотр"
 msgid "photo added at"
 msgstr "Фото добавлено"
 
-#: app/clients/models.py:75 app/settings/models/payments.py:7
-#: app/settings/models/services.py:19
+#: app/clients/models.py:75 app/settings/models/amenities.py:15
+#: app/settings/models/channels.py:20 app/settings/models/payments.py:7
+#: app/settings/models/places.py:7 app/settings/models/services.py:19
+#: app/settings/models/statuses.py:9
 msgid "order"
 msgstr "Сортировка"
 
@@ -145,138 +150,208 @@ msgstr "Нет еще фото..."
 msgid "pages"
 msgstr "Страницы"
 
-#: app/rooms/apps.py:8 app/rooms/models/room.py:69
+#: app/rooms/apps.py:8 app/rooms/models/rooms.py:57
 msgid "Rooms"
 msgstr "Номера"
 
-#: app/rooms/models/amenity.py:13
-msgid "room amenity"
-msgstr "Удобства в номере"
-
-#: app/rooms/models/amenity.py:19
-msgid "Amenity"
-msgstr "Удобства"
-
-#: app/rooms/models/amenity.py:20
-msgid "Amenities"
-msgstr "Удобства"
-
-#: app/rooms/models/category.py:17
+#: app/rooms/models/categories.py:17
 msgid "per room"
 msgstr "за номер"
 
-#: app/rooms/models/category.py:18
+#: app/rooms/models/categories.py:18
 msgid "per person"
 msgstr "за человека"
 
-#: app/rooms/models/category.py:20
+#: app/rooms/models/categories.py:20
 msgid "category name"
 msgstr "Название категории"
 
-#: app/rooms/models/category.py:21 app/rooms/models/room.py:17
+#: app/rooms/models/categories.py:21 app/rooms/models/rooms.py:17
 msgid "main places"
 msgstr "Основных мест"
 
-#: app/rooms/models/category.py:22 app/rooms/models/room.py:18
+#: app/rooms/models/categories.py:22 app/rooms/models/rooms.py:18
 msgid "additional places"
 msgstr "Дополнительных мест"
 
-#: app/rooms/models/category.py:23 app/rooms/models/room.py:20
+#: app/rooms/models/categories.py:23 app/rooms/models/rooms.py:20
 #: app/settings/models/services.py:14
 msgid "price"
 msgstr "Цена"
 
-#: app/rooms/models/category.py:24
+#: app/rooms/models/categories.py:24
 msgid "price_type"
 msgstr "Тип цены"
 
-#: app/rooms/models/category.py:26 app/rooms/models/room.py:26
+#: app/rooms/models/categories.py:26 app/rooms/models/rooms.py:26
 msgid "price for additional place"
 msgstr "Стоимость доп. места"
 
-#: app/rooms/models/category.py:31 app/rooms/models/room.py:57
+#: app/rooms/models/categories.py:31 app/rooms/models/rooms.py:49
 msgid "allow external booking"
 msgstr "Доступен для брони через модуль бронирования"
 
-#: app/rooms/models/category.py:35
+#: app/rooms/models/categories.py:35
 msgid "widget category name"
 msgstr "Название категории для модуля бронирования"
 
-#: app/rooms/models/category.py:41
+#: app/rooms/models/categories.py:41
 msgid "widget category description"
 msgstr "Описание категории для модуля бронирования"
 
-#: app/rooms/models/category.py:45 app/rooms/models/room.py:46
+#: app/rooms/models/categories.py:45 app/rooms/models/rooms.py:46
 msgid "room size"
 msgstr "Площадь номера"
 
-#: app/rooms/models/category.py:49 app/rooms/models/room.py:50
+#: app/rooms/models/categories.py:46 app/rooms/models/rooms.py:47
 msgid "room amenities"
 msgstr "Удобства в номере"
 
-#: app/rooms/models/category.py:54 app/rooms/models/room.py:55
+#: app/rooms/models/categories.py:47 app/rooms/models/rooms.py:48
 msgid "additional services"
 msgstr "Дополнительные услуги"
 
-#: app/rooms/models/category.py:59 app/rooms/models/room.py:61
+#: app/rooms/models/categories.py:48 app/rooms/models/rooms.py:50
 msgid "allow payment options"
 msgstr "Разрешить опции платежа"
 
-#: app/rooms/models/category.py:66
+#: app/rooms/models/categories.py:54
 msgid "Category"
 msgstr "Категория"
 
-#: app/rooms/models/category.py:67
+#: app/rooms/models/categories.py:55
 msgid "Categories"
 msgstr "Категории"
 
-#: app/rooms/models/category.py:84
+#: app/rooms/models/categories.py:62
 msgid "category photo"
 msgstr "Фото категории"
 
-#: app/rooms/models/room.py:15
+#: app/rooms/models/rooms.py:15
 msgid "room name"
 msgstr "Название номера"
 
-#: app/rooms/models/room.py:16
+#: app/rooms/models/rooms.py:16
 msgid "category"
 msgstr "Категория"
 
-#: app/rooms/models/room.py:32
+#: app/rooms/models/rooms.py:32
 msgid "allow booking sleep place"
 msgstr "Разрешить бронировать спальное место"
 
-#: app/rooms/models/room.py:36
+#: app/rooms/models/rooms.py:36
 msgid "sleep place price"
 msgstr "Стоимость суток за спальное место"
 
-#: app/rooms/models/room.py:41
+#: app/rooms/models/rooms.py:41
 msgid "is active"
 msgstr "Активно?"
 
-#: app/rooms/models/room.py:44
+#: app/rooms/models/rooms.py:44
 msgid "export room name"
 msgstr "Название номера для модуля бронирования"
 
-#: app/rooms/models/room.py:45
+#: app/rooms/models/rooms.py:45
 msgid "export room description"
 msgstr "Описание номера для модуля бронирования"
 
-#: app/rooms/models/room.py:68
+#: app/rooms/models/rooms.py:56
 msgid "Room"
 msgstr "Номер"
 
-#: app/rooms/models/room.py:85
+#: app/rooms/models/rooms.py:63
 msgid "photo"
 msgstr "Фотография"
 
-#: app/rooms/models/room.py:88
+#: app/rooms/models/rooms.py:66
 msgid "room"
 msgstr "Номер"
+
+#: app/settings/admin/channels.py:25 app/settings/models/coupons.py:19
+msgid "discount"
+msgstr "скидка"
+
+#: app/settings/admin/channels.py:29
+msgid "commission"
+msgstr "коммисия"
+
+#: app/settings/admin/statuses.py:18 app/settings/models/statuses.py:8
+msgid "color"
+msgstr "Цвет"
 
 #: app/settings/apps.py:8
 msgid "settings"
 msgstr "Настройки"
+
+#: app/settings/models/amenities.py:13
+msgid "room amenity"
+msgstr "Удобства в номере"
+
+#: app/settings/models/amenities.py:14 app/settings/models/coupons.py:11
+msgid "code"
+msgstr "код"
+
+#: app/settings/models/amenities.py:14
+msgid "this code using in channel manager"
+msgstr "Данный код используется в менеджере каналов"
+
+#: app/settings/models/amenities.py:21
+msgid "Amenity"
+msgstr "Удобства"
+
+#: app/settings/models/amenities.py:22
+msgid "Amenities"
+msgstr "Удобства"
+
+#: app/settings/models/channels.py:12 app/settings/models/coupons.py:10
+#: app/settings/models/hotel.py:11 app/settings/models/places.py:6
+#: app/settings/models/statuses.py:7
+msgid "name"
+msgstr "название"
+
+#: app/settings/models/channels.py:17
+msgid "contact name"
+msgstr "ФИО контакта"
+
+#: app/settings/models/channels.py:18
+msgid "client discount"
+msgstr "скидка клиента"
+
+#: app/settings/models/channels.py:19
+msgid "commission percent"
+msgstr "процент коммисии"
+
+#: app/settings/models/coupons.py:21
+msgid "active"
+msgstr "Активно"
+
+#: app/settings/models/coupons.py:24
+msgid "coupon"
+msgstr "купон"
+
+#: app/settings/models/coupons.py:25
+msgid "coupons"
+msgstr "купоны"
+
+#: app/settings/models/hotel.py:16
+msgid "terms and conditions of booking"
+msgstr "Правила и условия бронирования"
+
+#: app/settings/models/hotel.py:17
+msgid "displayed in the reservation module"
+msgstr "отображается в модуле бронирования"
+
+#: app/settings/models/hotel.py:24
+msgid "place type"
+msgstr "Тип размещения"
+
+#: app/settings/models/interface.py:80
+msgid "Interface setting"
+msgstr "Настройка интерфейса"
+
+#: app/settings/models/interface.py:81
+msgid "Interface settings"
+msgstr "Настройки интерфейса"
 
 #: app/settings/models/payments.py:6
 msgid "payment name"
@@ -289,6 +364,14 @@ msgstr "Платеж"
 #: app/settings/models/payments.py:15
 msgid "payments"
 msgstr "Платежи"
+
+#: app/settings/models/places.py:10
+msgid "place"
+msgstr "место размещения"
+
+#: app/settings/models/places.py:11
+msgid "places"
+msgstr "места размещения"
 
 #: app/settings/models/services.py:13
 msgid "service name"
@@ -317,6 +400,14 @@ msgstr "Услуга"
 #: app/settings/models/services.py:27
 msgid "services"
 msgstr "Услуги"
+
+#: app/settings/models/statuses.py:12
+msgid "residence status"
+msgstr "Статус проживания"
+
+#: app/settings/models/statuses.py:13
+msgid "residence statuses"
+msgstr "Статусы проживания"
 
 #: app/templates/404.html:10 app/templates/404.html:13
 msgid "Page Not Found"
@@ -354,6 +445,3 @@ msgstr "Сайт в разработке"
 
 #~ msgid "Credit card payment"
 #~ msgstr "Банковская карта"
-
-#~ msgid "name"
-#~ msgstr "название"

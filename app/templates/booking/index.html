@@ -1,0 +1,90 @@
+{% load i18n static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="robots" content="NONE,NOARCHIVE"/>
+    <title>«Мандархан Плюс» — сетка броникрования</title>
+    <link rel="stylesheet" href="{% static 'rest_framework/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'rest_framework/css/bootstrap-tweaks.css' %}">
+    <link rel="stylesheet" href="{% static 'rest_framework/css/default.css' %}">
+    <link rel="stylesheet" href="{% static 'mandarhan/css/gantt.css' %}">
+</head>
+<body class="">
+<div class="wrapper">
+    <div class="navbar navbar-static-top navbar-inverse" role="navigation" aria-label="navbar">
+        <div class="container">
+            <span>
+                <a href="{% url 'app:dashboard' %}" class="navbar-brand">Mandarhan Hotel Management System</a>
+            </span>
+            <ul class="nav navbar-nav pull-right">
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="{% url 'app:index' %}">Главная</a></li>
+            <li class="active"><a href="{% url 'app:booking-preview' %}">Сетка брони</a></li>
+        </ul>
+        <div id="content" role="main" aria-label="content">
+            <div class="region" aria-label="request form">
+                <form action="" class="button-form">
+                    <button class="btn btn-primary js-tooltip" title="Обновить таблицу">
+                        ОБНОВИТЬ
+                    </button>
+                </form>
+            </div>
+            <div class="content-main" role="main" aria-label="main content">
+                <div class="page-header">
+                    <h1>Сетка бронирования турбазы «Мандархан Плюс»</h1>
+                </div>
+                <div style="float: left;">
+                    Данные предоставляются только в ознакомительном виде. <br>
+                    Более подробные данные в личном кабинете.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div id="booking" class="gantt"></div>
+        </div>
+    </div>
+</div>
+<script>
+    window.drf = {
+        csrfHeaderName: "{{ csrf_header_name|default:'X-CSRFToken' }}",
+        csrfToken: "{{ csrf_token }}"
+    }
+</script>
+<script src="{% static "mandarhan/js/jquery.min.js" %}"></script>
+<script src="{% static "rest_framework/js/ajax-form.js" %}"></script>
+<script src="{% static "rest_framework/js/csrf.js" %}"></script>
+<script src="{% static "rest_framework/js/bootstrap.min.js" %}"></script>
+<script src="{% static "mandarhan/js/jquery.fn.gantt.min.js" %}"></script>
+<script>
+    $(document).ready(function () {
+        $('form').ajaxForm();
+
+        var bookingSource = {{ booking_table|safe }}
+
+        $('#booking').gantt({
+            source: bookingSource,
+            navigate: 'scroll',
+            scale: 'days',
+            maxScale: 'months',
+            minScale: 'days',
+            scrollToToday: true,
+            useCookie: true,
+            itemsPerPage: 50,
+            waitText: "Ждите, идёт загрузка данных...",
+            dow: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+            months: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,3 +1,2 @@
-from .amenity import *
-from .category import *
-from .room import *
+from .categories import *
+from .rooms import *

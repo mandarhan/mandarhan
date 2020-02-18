@@ -21,14 +21,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'qendng=ackd0$url22sugk^p$22ze3u_x@+#-b68gi#pl8!fh)'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'qendng=ackd0$url22sugk^p$22ze3u_x@+#-b68gi#pl8!fh)')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get('DEBUG', 0))
 
-ALLOWED_HOSTS = [
-    '127.0.0.1',
-]
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOST', '127.0.0.1').split(',')
 
 
 # Application definition
@@ -42,15 +40,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     'rest_framework',
     'adminsortable2',
     'rangefilter',
+    'preferences',
+    'colorfield',
 
     'app.settings',
     'app.rooms',
     'app.clients',
+    'app.booking',
     'app.pages',
+    'app.manage',
 ]
 
 MIDDLEWARE = [
@@ -76,6 +79,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'preferences.context_processors.preferences_cp',
             ],
         },
     },
@@ -114,6 +118,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTHENTICATION_BACKENDS = ['app.manage.authenticate.EmailBackend']
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -145,3 +152,10 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#media-root
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ]
+}
