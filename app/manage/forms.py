@@ -17,5 +17,5 @@ class LoginForm(forms.Form):
         password = cleaned_data.get('password')
         user = authenticate(self.request, username=email, password=password)
         if user is None:
-            raise forms.ValidationError(_('Incorrect email/password.'))
+            raise forms.ValidationError('Неверный логин и/или пароль.')
         login(self.request, user)
