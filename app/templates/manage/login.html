@@ -1,39 +1,54 @@
 {% extends 'manage/layouts/base.html' %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block style %}
     <style type="text/css">
         body {
-            background-color: #DADADA;
+            background-image: url({% static 'mandarhan/img/bg.jpg' %});
+            position: relative;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
         body > .grid {
             height: 100%;
         }
 
-        .image {
-            margin-top: -100px;
-        }
-
         .column {
             max-width: 450px;
         }
+    #datetime {
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 1em;
+        border-radius: 0.5em;
+    }
     </style>
 {% endblock %}
 
 {% block main-container %}
     <div class="ui middle aligned center aligned grid">
         <div class="column">
-            <h3 class="ui teal image header">
-                <img src="" alt="" class="image">
-                <div class="content">
-                    {% trans 'Log-in to your account' %}
+            <div class="ui basic segment right aligned">
+                <div class="ui statistic" id="datetime">
+                    <div class="label">
+                        <span id="date"></span>
+                        <span id="month"></span>
+                        <span id="year"></span>
+                    </div>
+                    <div class="value">
+                        <span id="hours"></span>:<span id="minutes"></span>
+                    </div>
                 </div>
-            </h3>
-            <form action="" class="ui large form" method="post">
+            </div>
+            <form action="" class="ui large error form" method="post">
                 {% csrf_token %}
-                <div class="ui stacked segment">
+                <div class="ui piled padded segment">
                     <div class="field{% if form.email.errors %} error{% endif %}">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            {{ form.email }}
+                        </div>
                         {% if form.email.errors %}
                             <div class="ui error message">
                                 <ul class="list">
@@ -43,12 +58,12 @@
                                 </ul>
                             </div>
                         {% endif %}
-                        <div class="ui left icon input">
-                            <i class="user icon"></i>
-                            {{ form.email }}
-                        </div>
                     </div>
-                    <div class="field">
+                    <div class="field{% if form.password.errors %} error{% endif %}">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            {{ form.password }}
+                        </div>
                         {% if form.password.errors %}
                             <div class="ui error message">
                                 <ul class="list">
@@ -58,22 +73,35 @@
                                 </ul>
                             </div>
                         {% endif %}
-                        <div class="ui left icon input">
-                            <i class="lock icon"></i>
-                            {{ form.password }}
+                    </div>
+                    {% if form.non_field_errors %}
+                        <div class="ui error message">
+                            {% for non_field_error in form.non_field_errors %}
+                                {{ non_field_error|escape }}<br>
+                            {% endfor %}
                         </div>
-                    </div>
-                    <button class="ui fluid large teal submit button">{% trans 'Login' %}</button>
+                    {% endif %}
+                    <button class="ui fluid large black submit button">Авторизоваться</button>
                 </div>
-
-                {% if form.non_field_errors or form.email.errors or form.password.errors  %}
-                    <div class="ui error message">
-                        {% for non_field_error in form.non_field_errors %}
-                            {{ non_field_error|escape }}<br>
-                        {% endfor %}
-                    </div>
-                {% endif %}
             </form>
         </div>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'mandarhan/js/clock.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            let options = {
+                dayId: 'date',
+                monthId: 'month',
+                yearId: 'year',
+                hoursId: 'hours',
+                minutesId: 'minutes',
+                timeZoneOffset: +8.00
+            };
+            let clock = new Clock(options);
+            clock.start();
+        });
+    </script>
 {% endblock %}
