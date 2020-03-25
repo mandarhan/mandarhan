@@ -1,0 +1,7 @@
+*.sqlite3
+.env
+*.env
+docker-compose.yml
+*.md
+*.rst
+.git
