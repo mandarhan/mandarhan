@@ -1,28 +1,15 @@
 'use script';
 
 class Clock {
-    constructor(options) {
-        // options = {
-        //     dayId: 'selectorName',
-        //     monthId: 'selectorName',
-        //     yearId: 'selectorName',
-        //     hoursId: 'selectorName',
-        //     minutesId: 'selectorName',
-        //     timeZoneOffset: +8.00
-        // }
-        this.day_selector = document.getElementById(options.dayId);
-        this.month_selector = document.getElementById(options.monthId);
-        this.year_selector = document.getElementById(options.yearId);
-        this.hours_selector = document.getElementById(options.hoursId);
-        this.minutes_selector = document.getElementById(options.minutesId);
-
-        // посчитаем и выставим часовой пояс пользователя,
-        // пример: timeZoneOffset = +8.00
-        let d = new Date();
-        let tzDifference = options.timeZoneOffset * 60 + d.getTimezoneOffset();
-        this.offset = tzDifference * 60 * 1000;
-
-        this.month = [
+    defaultOptions = {
+        dateId: 'date',
+        monthId: 'month',
+        yearId: 'year',
+        hoursId: 'hours',
+        minutesId: 'minutes',
+        secondsId: 'seconds',
+        timeZoneOffset: null,
+        monthNames: [
             'января',
             'февраля',
             'марта',
@@ -34,50 +21,112 @@ class Clock {
             'сентября',
             'октября',
             'ноября',
-            'декабря',
+            'декабря'
         ]
+    };
+
+    constructor(options) {
+        // options = {
+        //     dateId: 'date',
+        //     monthId: 'month',
+        //     yearId: 'year',
+        //     hoursId: 'hours',
+        //     minutesId: 'minutes',
+        //     secondsId: 'seconds',
+        //     timeZoneOffset: +4.00,
+        //     monthNames: [
+        //         'January',
+        //         'February',
+        //         'March',
+        //         'April',
+        //         'May',
+        //         'June',
+        //         'July',
+        //         'August',
+        //         'September',
+        //         'October',
+        //         'November',
+        //         'December'
+        //     ]
+        // }
+        if (typeof options === 'undefined') {
+            options = this.defaultOptions;
+        }
+
+        const keys = Object.keys(this.defaultOptions);
+        for (const key of keys) {
+            if (typeof options[key] === 'undefined') {
+                options[key] = this.defaultOptions[key];
+            }
+        }
+
+        this.monthNames = options.monthNames;
+
+        // get all clock elements
+        this.dateElement = document.getElementById(options.dateId);
+        this.monthElement = document.getElementById(options.monthId);
+        this.yearElement = document.getElementById(options.yearId);
+        this.hoursElement = document.getElementById(options.hoursId);
+        this.minutesElement = document.getElementById(options.minutesId);
+        this.secondsElement = document.getElementById(options.secondsId);
+
+        // calculate timezone offset
+        if (options.timeZoneOffset != null) {
+            let d = new Date();
+            let tzDifference = options.timeZoneOffset * 60 + d.getTimezoneOffset();
+            this.offset = tzDifference * 60 * 1000;
+        }
     }
 
     render() {
-        let date = new Date(new Date().getTime() + this.offset);
+        let date = new Date();
+        if (typeof this.offset !== 'undefined') {
+            date = new Date(new Date().getTime() + this.offset);
+        }
 
-        if (this.hours_selector != null) {
+        if (this.secondsElement != null) {
+            let seconds = date.getSeconds();
+            if (seconds < 10) seconds = '0' + seconds;
+            this.secondsElement.innerText = '' + seconds;
+        }
+
+        if (this.hoursElement != null) {
             let hours = date.getHours();
             if (hours < 10) hours = '0' + hours;
 
-            if (this.hours_selector.innerText !== '' + hours) {
-                this.hours_selector.innerText = hours;
+            if (this.hoursElement.innerText !== '' + hours) {
+                this.hoursElement.innerText = '' + hours;
             }
         }
 
-        if (this.minutes_selector != null) {
+        if (this.minutesElement != null) {
             let minutes = date.getMinutes();
             if (minutes < 10) minutes = '0' + minutes;
 
-            if (this.minutes_selector.innerText !== '' + minutes) {
-                this.minutes_selector.innerText = minutes;
+            if (this.minutesElement.innerText !== '' + minutes) {
+                this.minutesElement.innerText = '' + minutes;
             }
         }
 
-        if (this.day_selector != null) {
+        if (this.dateElement != null) {
             let day = date.getDate();
 
-            if (this.day_selector.innerText !== '' + day) {
-                this.day_selector.innerText = day;
+            if (this.dateElement.innerText !== '' + day) {
+                this.dateElement.innerText = '' + day;
             }
         }
 
-        if (this.month_selector != null) {
+        if (this.monthElement != null) {
             let month_index = date.getMonth();
-            if (this.month_selector.innerText !== this.month[month_index]) {
-                this.month_selector.innerText = this.month[month_index];
+            if (this.monthElement.innerText !== this.monthNames[month_index]) {
+                this.monthElement.innerText = this.monthNames[month_index];
             }
         }
 
-        if (this.year_selector != null) {
+        if (this.yearElement != null) {
             let year = date.getFullYear();
-            if (this.year_selector.innerText !== '' + year) {
-                this.year_selector.innerText = year;
+            if (this.yearElement.innerText !== '' + year) {
+                this.yearElement.innerText = '' + year;
             }
         }
     }
