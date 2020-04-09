@@ -1,91 +1,113 @@
-{% load i18n static %}
+{% load i18n static booking %}
 {% get_current_language as LANGUAGE_CODE %}
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="robots" content="NONE,NOARCHIVE"/>
-    <title>«Мандархан Плюс» — сетка броникрования</title>
-    <link rel="stylesheet" href="{% static 'rest_framework/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'rest_framework/css/bootstrap-tweaks.css' %}">
-    <link rel="stylesheet" href="{% static 'rest_framework/css/default.css' %}">
-    <link rel="stylesheet" href="{% static 'mandarhan/css/gantt.css' %}">
+    <title>«Мандархан Плюс» — Mandarhan Hotel Management System</title>
+    <link rel="stylesheet" href="{% static 'vendors/semantic-ui/semantic.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/datatables/datatables.min.css' %}">
+    <style>
+        body {
+            background: url({% static 'mandarhan/img/bg.jpg' %}) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+        .ui.header {
+            padding-top: 1em;
+        }
+        .ui.table thead th.red {
+            color: #db2828;
+        }
+        .ui.table thead th.today {
+            background: #2185d0;
+            color: #f9fafb;
+        }
+        .ui.table tbody td.today {
+            background: #dff0ff;
+            color: #2185d0;
+        }
+    </style>
 </head>
-<body class="">
-<div class="wrapper">
-    <div class="navbar navbar-static-top navbar-inverse" role="navigation" aria-label="navbar">
-        <div class="container">
-            <span>
-                <a href="{% url 'app:dashboard' %}" class="navbar-brand">Mandarhan Hotel Management System</a>
-            </span>
-            <ul class="nav navbar-nav pull-right">
-            </ul>
+<body>
+
+<div class="ui container piled segment" style="margin-top: 2rem">
+    <h2 class="ui dividing header">
+        Календарь заказанных номеров турбазы «Мандархан Плюс»
+    </h2>
+    <form class="ui form">
+        <div class="inline field">
+            <label for="id_period">Период</label>
+            <select name="period" id="id_period" class="ui dropdown">
+                <option value="1">1 день</option>
+                <option value="7">7 деней</option>
+                <option value="14">14 деней</option>
+                <option value="30">30 деней</option>
+                <option value="60">60 деней</option>
+                <option value="90" selected>90 деней</option>
+            </select>
         </div>
-    </div>
-    <div class="container">
-        <ul class="breadcrumb">
-            <li><a href="{% url 'app:index' %}">Главная</a></li>
-            <li class="active"><a href="{% url 'app:booking-preview' %}">Сетка брони</a></li>
-        </ul>
-        <div id="content" role="main" aria-label="content">
-            <div class="region" aria-label="request form">
-                <form action="" class="button-form">
-                    <button class="btn btn-primary js-tooltip" title="Обновить таблицу">
-                        ОБНОВИТЬ
-                    </button>
-                </form>
-            </div>
-            <div class="content-main" role="main" aria-label="main content">
-                <div class="page-header">
-                    <h1>Сетка бронирования турбазы «Мандархан Плюс»</h1>
-                </div>
-                <div style="float: left;">
-                    Данные предоставляются только в ознакомительном виде. <br>
-                    Более подробные данные в личном кабинете.
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div id="booking" class="gantt"></div>
-        </div>
-    </div>
+    </form>
+    <table id="mandarhan" class="ui table celled nowrap" style="width: 100%;">
+    <thead>
+    <tr>
+        <th></th>
+        <th></th>
+        {% for date, col_span in start_date|daterangemonth:end_date %}
+            <th colspan="{{ col_span }}">{{ date|date:'F Y' }}</th>
+        {% endfor %}
+    </tr>
+    <tr>
+        <th></th>
+        <th></th>
+        {% for date in start_date|daterange:end_date %}
+            <th class="center aligned{% if date == now_date %} today{% endif %} {% if date.weekday == 5 or date.weekday == 6 %} red{% endif %}">{{ date|date:'d' }}</th>
+        {% endfor %}
+    </tr>
+    <tr>
+        <th>Номера</th>
+        <th>Категории</th>
+        {% for date in start_date|daterange:end_date %}
+            <th class="center aligned{% if date == now_date %} today{% endif %} {% if date.weekday == 5 or date.weekday == 6 %} red{% endif %}">
+                {{ date|date:'D' }}
+            </th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for room in rooms %}
+        <tr>
+            <td>{{ room.name }}</td>
+            <td>{{ room.category__name }}</td>
+            {% for date in start_date|daterange:end_date %}
+                <td class="center aligned{% if date == now_date %} today{% endif %}{% if date.weekday == 5 or date.weekday == 6 %} active{% endif %}">
+                    {% for reserv in booking %}
+                        {% if reserv.room_id == room.id %}
+                            {% if reserv.date_from <= date and reserv.date_to >= date %}
+                                <a href="#" class="ui mini label green">{{ reserv.id }}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 </div>
 <script>
-    window.drf = {
-        csrfHeaderName: "{{ csrf_header_name|default:'X-CSRFToken' }}",
-        csrfToken: "{{ csrf_token }}"
-    }
+    window.config = {
+        api: {
+            booking_list: "{% url 'app:api:booking-list' %}"
+        }
+    };
 </script>
-<script src="{% static "mandarhan/js/jquery.min.js" %}"></script>
-<script src="{% static "rest_framework/js/ajax-form.js" %}"></script>
-<script src="{% static "rest_framework/js/csrf.js" %}"></script>
-<script src="{% static "rest_framework/js/bootstrap.min.js" %}"></script>
-<script src="{% static "mandarhan/js/jquery.fn.gantt.min.js" %}"></script>
-<script>
-    $(document).ready(function () {
-        $('form').ajaxForm();
-
-        var bookingSource = {{ booking_table|safe }}
-
-        $('#booking').gantt({
-            source: bookingSource,
-            navigate: 'scroll',
-            scale: 'days',
-            maxScale: 'months',
-            minScale: 'days',
-            scrollToToday: true,
-            useCookie: true,
-            itemsPerPage: 50,
-            waitText: "Ждите, идёт загрузка данных...",
-            dow: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
-            months: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
-        });
-    });
-</script>
+<script src="{% static 'vendors/datatables/datatables.min.js' %}"></script>
+<script src="{% static 'vendors/semantic-ui/semantic.min.js' %}"></script>
+<script src="{% static 'mandarhan/js/booking.js' %}"></script>
 </body>
 </html>
