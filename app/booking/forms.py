@@ -1,4 +1,6 @@
 from django import forms
+from django.db.models import Q
+from django.utils.formats import date_format
 from .models import Booking
 from ..settings.models import Channel, Status
 from ..rooms.models import Room
@@ -56,3 +58,24 @@ class BookingManageForm(forms.ModelForm):
             'comment',
             'client_comment',
         ]
+
+    def clean(self):
+        cleaned_data = super().clean()
+        room = cleaned_data.get('room')
+        date_from = cleaned_data.get('date_from')
+        date_to = cleaned_data.get('date_to')
+        reserved = room.booking_set.filter(
+            Q(date_from__range=(date_from, date_to)) |
+            Q(date_to__range=(date_from, date_to)) |
+            Q(date_from__lte=date_from, date_to__gte=date_to)
+        ).first()
+        if reserved:
+            self.add_error('date_from', 'Эта дата занята для выбранного номера, подробности ниже.')
+            self.add_error('date_to', 'Эта дата занята для выбранного номера, подробности ниже.')
+            raise forms.ValidationError(
+                '{room} забронирован(а) с {date_from} до {date_to}'.format(
+                    room=room.name,
+                    date_from=date_format(reserved.date_from),
+                    date_to=date_format(reserved.date_to),
+                )
+            )

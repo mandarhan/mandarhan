@@ -1,67 +1,105 @@
 {% extends 'manage/layouts/manage.html' %}
 
 {% block content %}
-    <form method="post" class="ui form">
+    <form method="post" class="ui form warning{% if form.errors %} error{% endif %}">
         {% csrf_token %}
         <div class="field">
             {{ form.channel.label_tag }}
             <div class="two fields">
-                <div class="field">
+                <div class="field{% if form.channel.errors %} error{% endif %}">
                     {{ form.channel }}
-                    {{ form.channel.errors }}
                 </div>
-                <div class="field">
+                <div class="field{% if form.channel_booking_number.errors %} error{% endif %}">
                     {{ form.channel_booking_number }}
+                </div>
+            </div>
+            {% if form.channel.errors or form.channel_booking_number.errors %}
+                <div class="ui error message">
+                    {{ form.channel.errors }}
                     {{ form.channel_booking_number.errors }}
                 </div>
-            </div>
-            <div class="field">
-                {{ form.room.label_tag }}
-                {{ form.room }}
-                {{ form.room.errors }}
-            </div>
-            <div class="two fields">
-                <div class="field">
-                    {{ form.date_from.label_tag }}
-                    {{ form.date_from }}
-                    {{ form.date_from.errors }}
-                </div>
-                <div class="field">
-                    {{ form.date_to.label_tag }}
-                    {{ form.date_to }}
-                    {{ form.date_to.errors }}
-                </div>
-            </div>
-            <div class="field">
-                {{ form.status.label_tag }}
-                {{ form.status }}
-                {{ form.status.errors }}
-            </div>
-            <div class="field">
-                {{ form.price.label_tag }}
-                <div class="two fields">
-                    <div class="field">
-                        {{ form.price }}
-                        {{ form.price.errors }}
-                    </div>
-                    <div class="field">
-                        {{ form.price_type }}
-                        {{ form.price_type.errors }}
-                    </div>
-                </div>
-            </div>
-            <div class="field">
-                {{ form.comment.label_tag }}
-                {{ form.comment }}
-                {{ form.comment.errors }}
-            </div>
-            <div class="field">
-                {{ form.client_comment.label_tag }}
-                {{ form.client_comment }}
-                {{ form.client_comment.errors }}
-            </div>
-            {{ form.non_field_errors }}
+            {% endif %}
         </div>
+        <div class="field{% if form.room.errors %} error{% endif %}">
+            {{ form.room.label_tag }}
+            {{ form.room }}
+            {% if form.room.errors %}
+                <div class="ui error message">
+                    {{ form.room.errors }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="two fields">
+            <div class="field{% if form.date_from.errors %} error{% endif %}">
+                {{ form.date_from.label_tag }}
+                {{ form.date_from }}
+                {% if form.date_from.errors %}
+                    <div class="ui error message">
+                        {{ form.date_from.errors }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="field{% if form.date_to.errors %} error{% endif %}">
+                {{ form.date_to.label_tag }}
+                {{ form.date_to }}
+                {% if form.date_to.errors %}
+                    <div class="ui error message">
+                        {{ form.date_to.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="field{% if form.status.errors %} error{% endif %}">
+            {{ form.status.label_tag }}
+            {{ form.status }}
+            {% if form.status.errors %}
+                <div class="ui error message">
+                    {{ form.status.errors }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="field">
+            {{ form.price.label_tag }}
+            <div class="two fields">
+                <div class="field{% if form.price.errors %} error{% endif %}">
+                    {{ form.price }}
+                    {{ form.price.errors }}
+                </div>
+                <div class="field{% if form.price_type.errors %} error{% endif %}">
+                    {{ form.price_type }}
+                    {{ form.price_type.errors }}
+                </div>
+            </div>
+            {% if form.price.errors or form.price_type.errors %}
+                <div class="ui error message">
+                    {{ form.price.errors }}
+                    {{ form.price_type.errors }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="field{% if form.comment.errors %} error{% endif %}">
+            {{ form.comment.label_tag }}
+            {{ form.comment }}
+            {% if form.comment.errors %}
+                <div class="ui error message">
+                    {{ form.comment.errors }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="field{% if form.client_comment.errors %} error{% endif %}">
+            {{ form.client_comment.label_tag }}
+            {{ form.client_comment }}
+            {% if form.client_comment.errors %}
+                <div class="ui error message">
+                    {{ form.client_comment.errors }}
+                </div>
+            {% endif %}
+        </div>
+        {% if form.non_field_errors %}
+            <div class="ui error message">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
         <button class="ui labeled icon green button" type="submit">
             <i class="plus icon"></i>
             Забронировать
@@ -115,6 +153,38 @@
         });
         $('#id_date_to_calendar').calendar({
             startCalendar: $('#id_date_from_calendar'),
+        });
+
+        var rooms_price = [
+            {% for room_price in rooms_price %}
+                {
+                    'id': {{ room_price.id }},
+                    'price': '{{ room_price.price }}'
+                }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ];
+
+        $('#id_room').on('change', function (e) {
+            var room_id = this.value;
+            var room_price = rooms_price.find(obj => {
+                return '' + obj.id === room_id
+            });
+            if (room_price) {
+                var price = room_price.price.replace(',', '.');
+                $('#id_price').val(price);
+                $('#id_price').data('price', price);
+            }
+        });
+        $('#id_price').on('change', function (e) {
+            if (this.value < $(this).data('price')) {
+                $(this).after(
+                    $('<div>').addClass('ui warning message').text('Вы установили цену ниже базовой.')
+                );
+            } else {
+                if ($(this).next().has('.warning')) {
+                    $(this).next().remove();
+                }
+            }
         });
     </script>
 {% endblock %}

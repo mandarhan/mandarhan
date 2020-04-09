@@ -59,4 +59,5 @@ class AddReservation(generic.CreateView):
         'title':  'Новое бронирование',
         'title_icon': 'calendar plus outline',
         'subtitle': 'Информация о заезде',
+        'rooms_price': Room.objects.filter(is_active=True).values('id', 'price')
     }

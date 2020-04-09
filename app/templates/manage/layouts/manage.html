@@ -2,8 +2,6 @@
 {% load static %}
 
 {% block style %}
-    <link rel="stylesheet" href="{% static 'vendors/semantic-ui/components/calendar.min.css' %}">
-    <link rel="stylesheet" href="{% static 'vendors/dhtmlx/gantt/dhtmlxgantt.css' %}">
     {% include 'manage/includes/styles.html' %}
 {% endblock %}
 
@@ -27,6 +25,5 @@
 
 {% block script %}
     <script src="{% static 'vendors/semantic-ui/components/calendar.min.js' %}"></script>
-    <script src="{% static 'vendors/dhtmlx/gantt/dhtmlxgantt.js' %}"></script>
     <script src="{% static 'mandarhan/js/manage.js' %}"></script>
 {% endblock %}

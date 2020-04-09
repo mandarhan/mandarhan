@@ -26,6 +26,5 @@ def daterangemonth(start_date, end_date):
                 counter[date.year] = {date.month: 1}
         else:
             counter[date.year][date.month] += 1
-    print(counter)
     for date in dates:
         yield date, counter[date.year][date.month]
