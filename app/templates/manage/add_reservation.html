@@ -1,0 +1,120 @@
+{% extends 'manage/layouts/manage.html' %}
+
+{% block content %}
+    <form method="post" class="ui form">
+        {% csrf_token %}
+        <div class="field">
+            {{ form.channel.label_tag }}
+            <div class="two fields">
+                <div class="field">
+                    {{ form.channel }}
+                    {{ form.channel.errors }}
+                </div>
+                <div class="field">
+                    {{ form.channel_booking_number }}
+                    {{ form.channel_booking_number.errors }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.room.label_tag }}
+                {{ form.room }}
+                {{ form.room.errors }}
+            </div>
+            <div class="two fields">
+                <div class="field">
+                    {{ form.date_from.label_tag }}
+                    {{ form.date_from }}
+                    {{ form.date_from.errors }}
+                </div>
+                <div class="field">
+                    {{ form.date_to.label_tag }}
+                    {{ form.date_to }}
+                    {{ form.date_to.errors }}
+                </div>
+            </div>
+            <div class="field">
+                {{ form.status.label_tag }}
+                {{ form.status }}
+                {{ form.status.errors }}
+            </div>
+            <div class="field">
+                {{ form.price.label_tag }}
+                <div class="two fields">
+                    <div class="field">
+                        {{ form.price }}
+                        {{ form.price.errors }}
+                    </div>
+                    <div class="field">
+                        {{ form.price_type }}
+                        {{ form.price_type.errors }}
+                    </div>
+                </div>
+            </div>
+            <div class="field">
+                {{ form.comment.label_tag }}
+                {{ form.comment }}
+                {{ form.comment.errors }}
+            </div>
+            <div class="field">
+                {{ form.client_comment.label_tag }}
+                {{ form.client_comment }}
+                {{ form.client_comment.errors }}
+            </div>
+            {{ form.non_field_errors }}
+        </div>
+        <button class="ui labeled icon green button" type="submit">
+            <i class="plus icon"></i>
+            Забронировать
+        </button>
+    </form>
+{% endblock %}
+
+{% block script %}
+    {{ block.super }}
+    <script>
+        $.fn.calendar.settings.ampm = false;
+        $.fn.calendar.settings.today = true;
+        $.fn.calendar.settings.firstDayOfWeek = 1;
+        $.fn.calendar.settings.formatter.date = function (date, settings) {
+            if (!date) return '';
+            var day = date.getDate();
+            if (day < 10) {
+                day = '0' + day;
+            }
+            var month = date.getMonth() + 1;
+            if (month < 10) {
+                month = '0' + month
+            }
+            var year = date.getFullYear();
+            return year + '-' + month + '-' + day;
+        };
+        $.fn.calendar.settings.formatter.time = function (date, settings) {
+            if (!date) return '';
+            var hours = date.getHours();
+            if (hours < 10) {
+                hours = '0' + hours;
+            }
+            var minutes = date.getMinutes();
+            if (minutes < 10) {
+                minutes = '0' + minutes;
+            }
+            return hours + ':' + minutes;
+        };
+        $.fn.calendar.settings.text = {
+            days: ['Вс', 'Пн', 'Вт', 'Ср', 'Чр', 'Пт', 'Сб'],
+            months: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+            monthsShort: ['янв', 'фев', 'мар', 'апр', 'май', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'],
+            today: 'Сегодня',
+            now: 'Сейчас',
+            am: 'AM',
+            pm: 'PM'
+        };
+        $('#id_date_from_calendar').calendar({
+            endCalendar: $('#id_date_to_calendar'),
+
+        });
+        $('#id_date_to_calendar').calendar({
+            startCalendar: $('#id_date_from_calendar'),
+        });
+    </script>
+{% endblock %}
