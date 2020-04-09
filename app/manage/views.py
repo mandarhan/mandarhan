@@ -1,3 +1,4 @@
+from django.contrib.auth import views
 from django.contrib.auth.decorators import login_required
 from django.views import generic
 from django.utils.decorators import method_decorator
@@ -8,6 +9,9 @@ from .forms import LoginForm
 
 class IndexView(generic.TemplateView):
     template_name = 'manage/index.html'
+    extra_context = {
+        'title': 'Сетка брони',
+    }
 
     @method_decorator(login_required(login_url='/manage/login'))
     def dispatch(self, request, *args, **kwargs):
@@ -36,3 +40,7 @@ class LoginView(generic.edit.FormView):
                 'files': self.request.FILES,
             })
         return kwargs
+
+
+class LogoutView(views.LogoutView):
+    next_page = 'app:dashboard'
