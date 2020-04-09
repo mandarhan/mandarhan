@@ -7,7 +7,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% if title %}{{ title }} - {% endif %}{% trans 'Hotel Management System' %}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" href="{% static 'vendors/semantic-ui/semantic.min.css' %}">
     {% block style %}{% endblock %}
 </head>
 <body>
@@ -17,7 +17,7 @@
     </div>
 {% endblock %}
 <script src="{% static 'rest_framework/js/jquery-3.4.1.min.js' %}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+<script src="{% static 'vendors/semantic-ui/semantic.min.js' %}"></script>
 {% block script %}{% endblock %}
 </body>
 </html>
