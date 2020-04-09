@@ -1,0 +1,30 @@
+<div class="ui left fixed inverted vertical menu">
+    <div class="ui container">
+        <div class="item blue active">
+            <strong>Mandarhan Hotel Management System</strong>
+        </div>
+        <a href="{% url 'app:dashboard' %}" class="purple item{% if request.resolver_match.view_name == 'app:dashboard' %} active{% endif %}">
+            Сетка брони
+            <div class="ui label {% if request.resolver_match.view_name == 'app:dashboard' %}black{% else %}purple{% endif %}">
+                Alt+D
+            </div>
+        </a>
+        <a href="{% url 'app:add-reservation' %}" class="purple item{% if request.resolver_match.view_name == 'app:add-reservation' %} active{% endif %}">
+            Добавить бронь
+            <div class="ui label {% if request.resolver_match.view_name == 'app:add-reservation' %}black{% else %}purple{% endif %}">
+                Alt+A
+            </div>
+        </a>
+        <a href="{% url 'app:logout' %}" class="item">Выход</a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('keypress', function (e) {
+        if (e.altKey && e.code === 'KeyD') {
+            window.location.href = "{% url 'app:dashboard' %}";
+        } else if (e.altKey && e.code === 'KeyA') {
+            window.location.href = "{% url 'app:add-reservation' %}";
+        }
+    });
+</script>
